@@ -1,0 +1,15 @@
+
+# inclui a licensa (caso exista)
+include LICEN(C|S)ES?
+
+# exclui dados especificos da versao
+global-exclude .pyc .pyo
+
+# exclui backups
+global-exclude *.bak *.bak.*
+
+# exclui dados sensiveis
+#recursive-exclude src/data *[^(.bin)]
+
+# exclui o makefile
+global-exclude makefile
