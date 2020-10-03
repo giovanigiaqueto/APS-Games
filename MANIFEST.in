@@ -10,6 +10,7 @@ global-exclude *.bak *.bak.*
 
 # exclui dados sensiveis
 #recursive-exclude src/data *[^(.bin)]
+exclude roteiro.txt
 
 # exclui o makefile
 global-exclude makefile
