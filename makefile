@@ -9,3 +9,8 @@ build:
 	python3 setup.py bdist_wheel
 
 refresh: build uninstall install
+
+tests: test
+
+test:
+	pytest --pyargs tests
