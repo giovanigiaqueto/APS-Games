@@ -1,2 +1,2 @@
 
-from carregadores import *
+from .carregadores import *

@@ -7,7 +7,7 @@ def carregar_qualquer(texto, *carregadores, preguicoso=False):
     resultado = None
     for carregador in carregadores:
 
-        resultado = carregador(texto, preguicoso=True)
+        resultado = carregador(texto, preguicoso=preguicoso)
         if validar(resultado):
             return resultado
 
@@ -45,11 +45,11 @@ def carregar_entre(texto, delimitadores, carregador, *,
     texto = texto[comprimento:]
 
     comprimento_posterior = len(texto)
-    texto = texto.rstrip()
+    texto = texto.lstrip()
 
     comprimento_posterior -= len(texto)
 
-    if texto != delimitadores[1]:
+    if texto[0] != delimitadores[1]:
         return None if not preguicoso else (0, None)
 
     texto = texto[1:]

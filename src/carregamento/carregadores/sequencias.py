@@ -1,5 +1,9 @@
 
+from .auxiliares import carregar_qualquer
+
 def carregar_par(texto, delimitador, *carregadores, preguicoso=False, estrito=False):
+
+    _texto = texto
 
     carregadores_primeiro, carregadores_segundo = carregadores, carregadores
     if estrito:
@@ -8,8 +12,9 @@ def carregar_par(texto, delimitador, *carregadores, preguicoso=False, estrito=Fa
     primeiro_comprimento, primeiro = carregar_qualquer(texto, *carregadores_primeiro, preguicoso=True)
     texto = texto[primeiro_comprimento:]
 
-    if primeiro is None:
-        return None if not preguicoso else (0, None, None)
+    #LEGACY: implementacao antiga nao permitia um par (None, valor)
+    #if primeiro is None:
+    #    return None if not preguicoso else (0, None, None)
 
     match = delimitador.match(texto) #TODO: traducao de match
     if match is None:
@@ -21,11 +26,13 @@ def carregar_par(texto, delimitador, *carregadores, preguicoso=False, estrito=Fa
     segundo_comprimento += match.span()[1]
 
     if segundo is None:
-        return None if not preguicoso else (primeiro_comprimento, primeiro, None)
+        #LEGACY: implementacao antiga nao permitia um par (valor, None) caso preguicoso=False
+        #return None if not preguicoso else (primeiro_comprimento, primeiro, None)
+        segundo_comprimento = 0
 
     texto = texto[segundo_comprimento:]
-    if not preguicoso and (texto != '' and not texto.isspace()):
-        return None
+    if not preguicoso:
+        return None if texto != '' and not texto.isspace() else (primeiro, segundo)
 
     return primeiro_comprimento + segundo_comprimento, primeiro, segundo
 

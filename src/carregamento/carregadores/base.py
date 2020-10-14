@@ -14,8 +14,8 @@ def carregar_string(texto, *, preguicoso=False):
 
     valor = texto[slice(*(match.span()))]
     texto = texto[match.span()[1]:]
-    if not preguicoso and (texto != '' and not texto.isspace()):
-        return None
+    if not preguicoso:
+        return None if texto != '' and not texto.isspace() else valor
 
     return (match.span()[1], valor)
 
@@ -27,12 +27,12 @@ def carregar_palavra(texto, *, preguicoso=False):
 
     valor = texto[slice(*(match.span()))]
     texto = texto[match.span()[1]:]
-    if not preguicoso and (texto != '' and not texto.isspace()):
-        return None
+    if not preguicoso:
+        return None if texto != '' and not texto.isspace() else valor
 
     return (match.span()[1], valor)
 
-def carregar_lista(texto, carregadores, preguicoso=False):
+def carregar_lista(texto, *carregadores, preguicoso=False):
 
     return carregar_entre(texto, '[]', carregar_sequencia,
         args=(delim_virgula, *carregadores), preguicoso=preguicoso)
