@@ -1,24 +1,38 @@
 
 class Opcao:
 
+    """
+    classe para escolhas feitas pelo usuario
+
+    atributos:
+        mensagem - texto da opcao
+        funcao   - funcao da opcao
+
+    permite:
+        exibicao do texto da opcao com o metodo 'exibir',
+        comparacao de igualdade com outros objetos,
+        execucao da funcao interna quando o objeto e chamado
+    """
+
     def __init__(self, mensagem, funcao=None):
-        """cria um objeto do tipo Opcao que pode exibir 'mensagem' na tela,
+        """cria um objeto do tipo Opcao que pode exibir a 'mensagem' na tela,
             ou executar sua funcao interna"""
 
         self._mensagem = mensagem
         self._funcao = funcao
 
     def __call__(self, *args, **kwargs):
-        """executa a funcao interna se disponivel, (ex: opcao(1, 2, 3))"""
+        """executa a funcao interna, se disponivel, com os argumentos fornecidos"""
 
         if callable(self._funcao):
             return self._funcao(*args, **kwargs)
 
     def __repr__(self):
+        """representacao textual da opcao"""
         return f"Opcao(msg='{self._mensagem}', func='{self._funcao}')"
 
     def __eq__(self, other):
-        """implementacao do operador de igualdade '==''"""
+        """implementacao do operador de igualdade"""
 
         # checa se o objeto é do mesmo tipo
         if not isinstance(other, Opcao):
@@ -29,7 +43,18 @@ class Opcao:
                 self._funcao    == other._funcao)
 
     def exibir(self, *, indice=None, identacao=None):
+        """
+        mostra o texto/mensagem da opcao no terminal.
 
+        se 'indice' for fornecido, deve ser um numero positivo
+        a ser mostrado antes que o texto da opcao.
+
+        se 'identacao' for fornecido, deve ser um texto ou
+        numero de espacos a serem mostrados antes da opcao.
+        se indice for fornecido, esse texto sera mostrado antes dele.
+        """
+
+        # verifica e converte 'identacao' se necessario
         if identacao is None:
             identacao = ''
 
@@ -45,22 +70,27 @@ class Opcao:
             raise TypeError(("Opcao.exibir: identacao deve ser um numero "
                 f"positivo, texto ou None, encontrado {type(identacao)}"))
 
+        # verifica 'indice'
         if indice is None:
             indice = ''
 
         elif isinstance(indice, int):
 
             if indice < 0:
+                # indice negativo, retorne um erro
                 raise ValueError(("Opcao.exibir: indice nao pode ser "
                     f"um numero negativo, encontrado {indice}"))
 
+            # indice numerico valido
             indice = f'{indice: 2} - '
 
         elif not isinstance(indice, str):
+            # indice invalido de tipo desconhecido, retorne um erro
             raise ValueError(("Opcao.exibir: identacao deve ser um numero "
                 f"positivo, texto ou None, encontrado '{indice}'"))
 
-        print(identacao, indice, self.mensagem, sep='')
+        # mostre o texto da opcao
+        print(identacao, indice, self._mensagem, sep='')
 
     @staticmethod
     def convertivel_para_opcao(self, objeto):
