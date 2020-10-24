@@ -110,7 +110,7 @@ class Opcao:
 
 class Escolhas:
 
-    def __init__(self, *opcoes, copiar_opcoes=False):
+    def __init__(self, *opcoes, introducao=None, copiar_opcoes=False):
 
         # valida as opcoes
         ops = []
@@ -131,7 +131,12 @@ class Escolhas:
                 raise TypeError(("Escolhas.__init__: 'opcoes' deve conter valores "
                     f"do tipo 'Opcao', {op} encontrado no indice {index}"))
 
+        if introducao is not None and not isinstance(introducao, str):
+            raise TypeError(("Escolhas.__init__: introducao deve ser do tipo "
+                f"str (texo) ou None, encontrado {type(introducao)}"))
+
         self._opcoes = ops
+        self._introducao = introducao
 
     def __bool__(self):
         return bool(self._opcoes)
@@ -177,7 +182,7 @@ class Escolhas:
 
         del self._opcoes[chave]
 
-    def escolher_indice(self, introducao, pergunta=None, *, identacao=None):
+    def escolher_indice(self, introducao=None, pergunta=None, identacao=None):
 
         # valida e converte 'indetacao' se necessario
         if identacao is None:
@@ -195,10 +200,17 @@ class Escolhas:
             raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
                 f"positivo, texto ou None, encontrado {type(identacao)}"))
 
+        if introducao is None:
 
-        if not isinstance(introducao, str):
+            if self._introducao is None:
+                raise ValueError(("Escolhas.entrada: nenhuma introducao foi "
+                    "fornecida para a funcao e o objeto nao possui uma introducao padrao"))
+
+            introducao = self._introducao
+
+        elif not isinstance(introducao, str):
             raise TypeError(("Escolhas.entrada: introducao deve ser do tipo "
-                f"str (texo), encontrado {type(introducao)}"))
+                f"texo ou None, encontrado {type(introducao)}"))
 
         # valida e converte 'pergunta' se necessario
         if pergunta is None:
@@ -238,27 +250,23 @@ class Escolhas:
         # retorna escolha
         return indice_escolha, self._opcoes[indice_escolha]
 
-    def escolher(self, introducao, pergunta=None, *, args=tuple(), kwargs={}, identacao=None):
+    def escolher(self, introducao=None, pergunta=None, identacao=None, *, args=tuple(), kwargs={}):
 
         # escolher opcao
-        indice, opcao = self.escolher_indice(introducao, pergunta)
+        indice, opcao = self.escolher_indice(introducao, pergunta, identacao)
 
         # executar opcao
         return opcao(*args, **kwargs)
 
     @property
     def introducao(self):
-        return str(self._introducao)
+        return self._introducao
 
     @introducao.setter
     def introducao(self, valor):
 
-        if valor is None:
-            self._introducao = ''
-
-        elif isinstance(valor, str):
+        if valor is None or isinstance(valor, str):
             self._introducao = valor
-
         else:
             raise TypeError(("Escolhas: impossivel alterar o valor de 'introducao'"
                 f", tipo nao permitido {type(valor)}"))
