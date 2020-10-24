@@ -15,8 +15,10 @@ class Opcao:
     """
 
     def __init__(self, mensagem, funcao=None):
-        """cria um objeto do tipo Opcao que pode exibir a 'mensagem' na tela,
-            ou executar sua funcao interna"""
+        """
+        cria um objeto do tipo Opcao que pode exibir a 'mensagem' na tela,
+        ou executar sua funcao interna
+        """
 
         self._mensagem = mensagem
         self._funcao = funcao
@@ -94,53 +96,104 @@ class Opcao:
 
     @staticmethod
     def convertivel_para_opcao(self, objeto):
+        """
+        verifica se objeto e uma lista de argumentos que, se fornecidos
+        para o construtor da classe (Opcoes.__init__), criariam um novo
+        objeto valido.
+        """
 
+        # verifica se lista de argumentos
         if not isinstance(objeto, (list, tuple)):
             return False
 
+        # verifica o numero de argumentos
         if len(objeto) != 2:
             return False
 
+        # verifica os argumentos
         if isinstance(objeto[0], str) and (objeto[1] is None or callable(objeto[1])):
             return True
 
+        # nao e uma lista de argumentos validos
         return False
 
     @property
     def mensagem(self):
+        """retorna o texto da opcao"""
         return str(self._mensagem)
 
     @mensagem.setter
     def mensagem(self, valor):
+        """
+        permite mudar o valor do texto da opcao somente para um texto ou None,
+        evitando erros de mudanca de tipo acidental
+        """
+
+        # valida o valor fornecido
         if valor is None:
+            # None, modifique o valor do texto da opcao
             self._mensagem = ''
 
         elif isinstance(valor, str):
+            # texto, modifique o valor do texto da opcao
             self._mensagem = str(valor)
 
         else:
+            # valor invalido de tipo desconhecido, retorne um erro
             raise TypeError(("impossivel mudar Opcao.mensagem para "
                 f"'{valor}', tipo nao permitido {type(valor)}"))
 
     @property
     def funcao(self):
+        """retorna a funcao interna da opcao"""
         return self._funcao
 
     @funcao.setter
     def funcao(self, valor):
+        """
+        permite mudar o valor da funcao interna somente para uma funcao ou None,
+        evitando erros de mudanca de tipo acidental
+        """
+
+        # verifica o valor
         if valor is None:
+            # None, altere o valor da funcao interna
             self._funcao = None
 
         elif callable(valor):
+            # funcao, altere o valor da funcao interna
             self._funcao = valor
 
         else:
+            # tipo invalido e desconhecido, retorne um erro
             raise TypeError(("impossivel mudar Opcao.funcao, "
                 f"'{valor}' nao e uma funcao valida"))
 
 class Escolhas:
 
+    """
+    classe para perguntar ao usuario entre as escolhas
+
+    atributos:
+        opcoes     - opcoes a serem fornecidas (classe Opcao)
+        introducao - introducao breve para as opcoes
+
+    permite:
+        utilizacao parcial como lista que so contem items do tipo Opcao,
+        pergutar ao usuario entre as opcoes retornando ou executando a escolhida.
+    """
+
     def __init__(self, *opcoes, introducao=None, copiar_opcoes=False):
+        """
+        cria um objeto do tipo Escolhas para perguntar ao usuario
+        entre as opcoes fornecendo uma introducao breve primeiro.
+
+        se 'introducao' for fornecida, ela sera usada como introducao padrao
+        caso outra introducao nao seja fornecida a um metodo que precise de uma.
+
+        se 'copiar_opcoes' for verdadeiro, copia as opcoes fornecidas,
+        evitando que suas opcoes sejam indevidamente modificadas externamente.
+        """
 
         # valida as opcoes
         ops = []
@@ -350,10 +403,15 @@ class Escolhas:
 
     @property
     def introducao(self):
+        """retorna a introducao do objeto"""
         return self._introducao
 
     @introducao.setter
     def introducao(self, valor):
+        """
+        permite mudar o valor da introducao somente para um texto ou None,
+        evitando erros de mudanca de tipo acidental
+        """
 
         if valor is None or isinstance(valor, str):
             self._introducao = valor
@@ -363,27 +421,46 @@ class Escolhas:
 
     @property
     def opcoes(self):
+        """
+        retorna uma copia das opcoes, evitando a modificacao indevida das opcoes.
+        """
         return list(self._opcoes)
 
     @opcoes.setter
     def opcoes(self, valor):
+        """
+        permite mudar os opcoes somente para uma lista de opcoes validas,
+        evitando erros de mudanca de tipo acidental
+        """
+
+        if not hasattr(valor, "__iter__"):
+            raise TypeError(("Escolhas: impossivel alterar o valor de "
+                f"'opcoes', tipo invalido {type(valor)}"))
 
         ops = []
         for indice, op in enumerate(self._opcoes):
-            if isinstance(op, (tuple, list)):
-                if self.convertivel_para_opcao(op):
-                    ops.append(Opcao(*op))
 
-                else:
+            # valida a opcao
+            if isinstance(op, (tuple, list)):
+
+                if not self.convertivel_para_opcao(op):
+                    # opcao invalida fornecida, retorne um erro
                     raise ValueError(("Escolhas: impossivel alterar o valor de "
-                        f"'opcoes', valor invalido {valor}"))
+                        f"'opcoes', valor invalido {op} no indice {indice}"))
+
+                # opcao valida fornecida
+                ops.append(Opcao(*op))
 
             elif isinstance(Opcao):
-                ops.append(op.copiar() if copiar_opcoes else op)
+                # opcao valida fornecida
+                ops.append(op.copiar())
 
             else:
+                # opcao invalida e desconhecida, retorne um erro
                 raise TypeError(("Escolhas: impossivel alterar o valor de "
-                    f"'opcoes', tipo nao permitido {type(valor)}"))
+                    f"'opcoes', tipo nao permitido {type(valor)} no indice {indice}"))
+
+        self._opcoes = ops
 
 if __name__ == '__main__':
 
