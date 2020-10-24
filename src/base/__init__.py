@@ -169,48 +169,63 @@ class Escolhas:
         self._introducao = introducao
 
     def __bool__(self):
+        """retorna se o objeto contem opcoes"""
         return bool(self._opcoes)
 
     def __len__(self):
+        """retorna o numero de opcoes do objeto"""
         return len(self._opcoes)
 
     def __contains__(self, valor):
+        """verifica se o objeto contem uma opcao ('valor' in 'self')"""
         return valor in self._opcoes
 
-    def __getitem__(self, chave):
-        # valida chave
-        if not isinstance(chave, int) or chave < 0 or chave >= len(self._opcoes):
-            raise IndexError(f"Escolhas.__setitem__: indice invalido {chave}")
+    def __getitem__(self, indice):
+        """retorna a opcao de numero 'indice' (self[indice])"""
 
-        return self._opcoes[chave]
+        # valida o indice fornecido
+        if not isinstance(indice, int) or indice < 0 or indice >= len(self._opcoes):
+            raise IndexError(f"Escolhas.__setitem__: indice invalido {indice}")
 
-    def __setitem__(self, chave, valor):
-        # valida chave
-        if not isinstance(chave, int) or chave < 0 or chave >= len(self._opcoes):
-            raise IndexError(f"Escolhas.__setitem__: indice invalido {chave}")
+        # retorna a opcao associada ao indice
+        return self._opcoes[indice]
 
+    def __setitem__(self, indice, valor):
+        """altera a opcao de numero 'indice' (self[indice] = valor)"""
+
+        # valida o indice fornecido
+        if not isinstance(indice, int) or indice < 0 or indice >= len(self._opcoes):
+            raise IndexError(f"Escolhas.__setitem__: indice invalido {indice}")
+
+        # valida o valor fornecido e altera a opcao
+        # no indice fornecido para o novo valor se ele for valido
         if isinstance(valor, (tuple, list)):
-            if not convertivel_para_opcao(valor):
+            if not convertivel_para_opcao(indice):
+                # o valor nao pode ser convertido implicitamente para o tipo Opcao
                 raise ValueError(("Escolhas: impossivel alterar o valor de "
                     f"'opcoes', valor invalido {valor}"))
 
-            self._opcoes[chave] = Opcao(*valor)
+            # valor valido, altera a opcao no indice fornecido
+            self._opcoes[indice] = Opcao(*valor)
 
         elif isinstance(valor, Opcao):
-            self._opcoes[chave] = valor
+            # valor valido, altera a opcao no indice fornecido
+            self._opcoes[indice] = valor
 
         else:
+            # valor invalido e desconhecido, retorne um error
             raise TypeError(("Escolhas: impossivel alterar o valor de 'opcoes'"
                 f", tipo nao permitido {type(valor)}"))
 
-        return chave
+    def __delitem__(self, indice):
+        """deleta a opcao de numero 'indice', diminuindo o numero de opcoes del self[indice]"""
 
-    def __delitem__(self, chave):
-        # valida chave
-        if not isinstance(chave, int) or chave < 0 or chave >= len(self._opcoes):
-            raise IndexError(f"Escolhas.__setitem__: indice invalido {chave}")
+        # valida o indice fornecido
+        if not isinstance(indice, int) or indice < 0 or indice >= len(self._opcoes):
+            raise IndexError(f"Escolhas.__setitem__: indice invalido {indice}")
 
-        del self._opcoes[chave]
+        # remove a opcao
+        del self._opcoes[indice]
 
     def escolher_indice(self, introducao=None, pergunta=None, identacao=None):
         """
