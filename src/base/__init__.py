@@ -2,10 +2,15 @@
 class Opcao:
 
     def __init__(self, mensagem, funcao=None):
+        """cria um objeto do tipo Opcao que pode exibir 'mensagem' na tela,
+            ou executar sua funcao interna"""
+
         self._mensagem = mensagem
         self._funcao = funcao
 
     def __call__(self, *args, **kwargs):
+        """executa a funcao interna se disponivel, (ex: opcao(1, 2, 3))"""
+
         if callable(self._funcao):
             return self._funcao(*args, **kwargs)
 
@@ -13,7 +18,63 @@ class Opcao:
         return f"Opcao(msg='{self._mensagem}', func='{self._funcao}')"
 
     def __eq__(self, other):
-        return isinstance(other, Opcao) and self._mensagem == other._mensagem and self._funcao == other._funcao
+        """implementacao do operador de igualdade '==''"""
+
+        # checa se o objeto é do mesmo tipo
+        if not isinstance(other, Opcao):
+            return False
+
+        # checa se o objeto tem os mesmos valores
+        return (self._mensagem  == other._mensagem and
+                self._funcao    == other._funcao)
+
+    def exibir(self, *, indice=None, identacao=None):
+
+        if identacao is None:
+            identacao = ''
+
+        elif isinstance(identacao, int):
+
+            if identacao < 0:
+                raise ValueError(("Opcao.exibir: identacao nao pode ser "
+                    f"um numero negativo, encontrado {identacao}"))
+
+            identacao = ' ' * identacao
+
+        elif not isinstance(identacao, str):
+            raise TypeError(("Opcao.exibir: identacao deve ser um numero "
+                f"positivo, texto ou None, encontrado {type(identacao)}"))
+
+        if indice is None:
+            indice = ''
+
+        elif isinstance(indice, int):
+
+            if indice < 0:
+                raise ValueError(("Opcao.exibir: indice nao pode ser "
+                    f"um numero negativo, encontrado {indice}"))
+
+            indice = f'{indice: 2} - '
+
+        elif not isinstance(indice, str):
+            raise ValueError(("Opcao.exibir: identacao deve ser um numero "
+                f"positivo, texto ou None, encontrado '{indice}'"))
+
+        print(identacao, indice, self.mensagem, sep='')
+
+    @staticmethod
+    def convertivel_para_opcao(self, objeto):
+
+        if not isinstance(objeto, (list, tuple)):
+            return False
+
+        if len(objeto) != 2:
+            return False
+
+        if isinstance(objeto[0], str) and (objeto[1] is None or callable(objeto[1])):
+            return True
+
+        return False
 
     @property
     def mensagem(self):
@@ -28,8 +89,9 @@ class Opcao:
             self._mensagem = str(valor)
 
         else:
-            raise TypeError(f"impossivel mudar Opcao.mensagem para '{valor}', tipo invalido '{type(valor)}'")
-    
+            raise TypeError(("impossivel mudar Opcao.mensagem para "
+                f"'{valor}', tipo nao permitido {type(valor)}"))
+
     @property
     def funcao(self):
         return self._funcao
@@ -43,57 +105,33 @@ class Opcao:
             self._funcao = valor
 
         else:
-            raise TypeError(f"impossivel mudar Opcao.funcao, '{valor}' nao e uma funcao valida")
+            raise TypeError(("impossivel mudar Opcao.funcao, "
+                f"'{valor}' nao e uma funcao valida"))
 
 class Escolhas:
-    
 
-    # ==================== LEGACY ====================
-    #
-    #def __init__(self, introducao, *opcoes, copiar_opcoes=False):
-    #
-    #    # valida introducao
-    #    if not (introducao is None or isinstance(introducao, str)):
-    #        raise TypeError(f"Escolhas.__init__: 'introducao' deve ser um texto ou None")
-    #
-    #    # valida as opcoes
-    #    ops = []
-    #    for indice, op in enumerate(opcoes):
-    #
-    #        if isinstance(op, (tuple, list)):
-    #            if len(op) != 2 or not isinstance(op[0], str) or (op[1] is not None and not callable(op[1])):
-    #                raise TypeError(f"Escolhas.__init__: 'opcoes' deve conter valores do tipo 'Opcao', {op} encontrado no indice {index}")
-    #
-    #            ops.append(Opcao(*op))
-    #
-    #        elif isinstance(Opcao):
-    #            ops.append(op.copiar() if copiar_opcoes else op)
-    #
-    #       else:
-    #           raise TypeError(f"Escolhas.__init__: 'opcoes' deve conter valores do tipo 'Opcao', {op} encontrado no indice {index}")    
-    #    
-    #   self._introducao = introducao
-    #   self._opcoes = ops
-    
-    def __init__(self, *opcoes, copiar_opcoes=False): 
-    
+    def __init__(self, *opcoes, copiar_opcoes=False):
+
         # valida as opcoes
         ops = []
         for indice, op in enumerate(opcoes):
-            
+
             if isinstance(op, (tuple, list)):
-                if len(op) != 2 or not isinstance(op[0], str) or (op[1] is not None and not callable(op[1])):
-                    raise TypeError(f"Escolhas.__init__: 'opcoes' deve conter valores do tipo 'Opcao', {op} encontrado no indice {index}")
-                
-                ops.append(Opcao(*op))
-                
+                if Opcao.convertivel_para_opcao(op):
+                    ops.append(Opcao(*op))
+
+                else:
+                    raise TypeError(("Escolhas.__init__: 'opcoes' deve conter "
+                        f"valores do tipo 'Opcao', {op} encontrado no indice {index}"))
+
             elif isinstance(op, Opcao):
                 ops.append(op.copiar() if copiar_opcoes else op)
-                
+
             else:
-                raise TypeError(f"Escolhas.__init__: 'opcoes' deve conter valores do tipo 'Opcao', {op} encontrado no indice {index}")    
-        
-        self._opcoes = ops   
+                raise TypeError(("Escolhas.__init__: 'opcoes' deve conter valores "
+                    f"do tipo 'Opcao', {op} encontrado no indice {index}"))
+
+        self._opcoes = ops
 
     def __bool__(self):
         return bool(self._opcoes)
@@ -104,7 +142,7 @@ class Escolhas:
     def __contains__(self, valor):
         return valor in self._opcoes
 
-    def __getitem__(self, chave): 
+    def __getitem__(self, chave):
         # valida chave
         if not isinstance(chave, int) or chave < 0 or chave >= len(self._opcoes):
             raise IndexError(f"Escolhas.__setitem__: indice invalido {chave}")
@@ -117,8 +155,9 @@ class Escolhas:
             raise IndexError(f"Escolhas.__setitem__: indice invalido {chave}")
 
         if isinstance(valor, (tuple, list)):
-            if len(valor) != 2 or not isinstance(valor[0], str) or (valor[1] is not None and not callable(valor[1])):
-                raise TypeError(f"Escolhas: impossivel alterar o valor de 'opcoes', valor invalido {valor}")
+            if not convertivel_para_opcao(valor):
+                raise ValueError(("Escolhas: impossivel alterar o valor de "
+                    f"'opcoes', valor invalido {valor}"))
 
             self._opcoes[chave] = Opcao(*valor)
 
@@ -126,7 +165,8 @@ class Escolhas:
             self._opcoes[chave] = valor
 
         else:
-            raise TypeError(f"Escolhas: impossivel alterar o valor de 'opcoes', o valor invalido {valor}")
+            raise TypeError(("Escolhas: impossivel alterar o valor de 'opcoes'"
+                f", tipo nao permitido {type(valor)}"))
 
         return chave
 
@@ -137,8 +177,8 @@ class Escolhas:
 
         del self._opcoes[chave]
 
-    def escolher(self, introducao, pergunta=None, *, args=tuple(), kwargs={}, identacao=None):
-        
+    def escolher_indice(self, introducao, pergunta=None, *, identacao=None):
+
         # valida e converte 'indetacao' se necessario
         if identacao is None:
             identacao = ''
@@ -146,32 +186,40 @@ class Escolhas:
         elif isinstance(identacao, int):
 
             if identacao < 0:
-                raise ValueError(f"Escolhas.entrada: indentacao deve ser um numero positivo, texto ou None, encontrado '{identacao}'")
+                raise ValueError(("Escolhas.entrada: identacao nao pode "
+                    f"ser um numero negativo, encontrado {identacao}"))
 
             identacao = ' ' * identacao
 
         elif not isinstance(identacao, str):
-            raise ValueError(f"Escolhas.entrada: indentacao deve ser um numero positivo, texto ou None, encontrado '{identacao}'")
+            raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
+                f"positivo, texto ou None, encontrado {type(identacao)}"))
+
+
+        if not isinstance(introducao, str):
+            raise TypeError(("Escolhas.entrada: introducao deve ser do tipo "
+                f"str (texo), encontrado {type(introducao)}"))
 
         # valida e converte 'pergunta' se necessario
         if pergunta is None:
             pergunta = 'escolha: '
 
         elif not isinstance(identacao, str):
-            raise ValueError(f"Escolhas.entrada: indentacao deve ser um numero positivo, texto ou None, encontrado '{identacao}'") 
-        
+            raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
+                f"positivo, texto ou None, encontrado {type(identacao)}"))
+
         # mostra a introducao
         print(identacao)
         print(identacao, introducao, sep='')
 
         # pergunta ao usuario as escolhas
         indice_escolha = 0
-        while True: 
+        while True:
 
             # mostra as opcoes
             for indice, op in enumerate(self._opcoes):
-                print(identacao, '  {: 2} - '.format(indice), op.mensagem, sep='')
-        
+                op.exibir(indice=indice, identacao='  '+identacao)
+
             # entrada da escolha
             try:
                 print(identacao)
@@ -183,12 +231,20 @@ class Escolhas:
                 # escolha valida
                 if indice_escolha >= 0 and indice_escolha < len(self._opcoes):
                     break
-            
-            # escolha invalida 
+
+            # escolha invalida
             print(identacao, 'escolha invalida, tente novamente', sep='')
 
-        # executa escolha
-        return self._opcoes[indice_escolha](*args, **kwargs)
+        # retorna escolha
+        return indice_escolha, self._opcoes[indice_escolha]
+
+    def escolher(self, introducao, pergunta=None, *, args=tuple(), kwargs={}, identacao=None):
+
+        # escolher opcao
+        indice, opcao = self.escolher_indice(introducao, pergunta)
+
+        # executar opcao
+        return opcao(*args, **kwargs)
 
     @property
     def introducao(self):
@@ -197,10 +253,15 @@ class Escolhas:
     @introducao.setter
     def introducao(self, valor):
 
-        if not (valor is None or isinstance(valor, str)):
-            raise TypeError(f"Escolhas: impossivel alterar o valor de 'introducao', valor invalid {valor}")
+        if valor is None:
+            self._introducao = ''
 
-        self._introducao = '' if valor is None else valor
+        elif isinstance(valor, str):
+            self._introducao = valor
+
+        else:
+            raise TypeError(("Escolhas: impossivel alterar o valor de 'introducao'"
+                f", tipo nao permitido {type(valor)}"))
 
     @property
     def opcoes(self):
@@ -208,20 +269,23 @@ class Escolhas:
 
     @opcoes.setter
     def opcoes(self, valor):
-        
+
         ops = []
         for indice, op in enumerate(self._opcoes):
             if isinstance(op, (tuple, list)):
-                if len(indice) != 2 or not isinstance(op[0], str) or (op[1] is not None and not callable(op[1])):
-                    raise TypeError(f"Escolhas: impossivel alterar o valor de 'opcoes', valor invalido {valor}")
+                if self.convertivel_para_opcao(op):
+                    ops.append(Opcao(*op))
 
-                ops.append(Opcao(*op))
+                else:
+                    raise ValueError(("Escolhas: impossivel alterar o valor de "
+                        f"'opcoes', valor invalido {valor}"))
 
             elif isinstance(Opcao):
                 ops.append(op.copiar() if copiar_opcoes else op)
 
             else:
-                raise TypeError(f"Escolhas: impossivel alterar o valor de 'opcoes', o valor invalido {valor}")
+                raise TypeError(("Escolhas: impossivel alterar o valor de "
+                    f"'opcoes', tipo nao permitido {type(valor)}"))
 
 if __name__ == '__main__':
 
@@ -232,7 +296,7 @@ if __name__ == '__main__':
     opcao_A = Opcao('opcao A', funcao_A)
     opcao_B = Opcao('opcao B', funcao_B)
     opcao_C = Opcao('opcao C', funcao_C)
-    
+
     escolhas = Escolhas(opcao_A, opcao_B, opcao_C)
 
     escolhas.escolher('escolha uma opcao', 'opcao: ', identacao=2)
