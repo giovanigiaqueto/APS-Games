@@ -183,8 +183,25 @@ class Escolhas:
         del self._opcoes[chave]
 
     def escolher_indice(self, introducao=None, pergunta=None, identacao=None):
+        """
+        manda o usuario escolher uma das opcoes da classe, retornando o numero
+        da escolha e a opcao escolhida.
 
-        # valida e converte 'indetacao' se necessario
+        imprime no terminal uma introducao, cada uma das opcoes com o seu numero
+        de escolha e um texto de pergunta (padrao: 'escolha: '). se um numero
+        invalido for fornecido, um erro sera mostrado e o usuario sera perguntado
+        novamente ate uma resposta valida for entrada.
+
+        se 'introducao' NAO for fornecido, a introducao padrao da classe sera
+        usada em seu lugar, se nenhum delas forem fornecidas um erro sera mostrado.
+
+        'pergunta', se fornecido, deve ser um texto.
+
+        se 'indentacao' for fornecido, deve ser um texto ou um numero de espacos
+        a ser imprimido antes de cada linha, permitido que o texto seja identado.
+        """
+
+        # valida e converte 'idetacao' se necessario
         if identacao is None:
             identacao = ''
 
@@ -200,62 +217,90 @@ class Escolhas:
             raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
                 f"positivo, texto ou None, encontrado {type(identacao)}"))
 
+
+        # valida 'introducao' e se necessario usa a introducao do objeto
         if introducao is None:
 
+            # nenhuma introducao fornecida, retorne um erro
             if self._introducao is None:
                 raise ValueError(("Escolhas.entrada: nenhuma introducao foi "
                     "fornecida para a funcao e o objeto nao possui uma introducao padrao"))
 
+            # usando a introducao padrao do objeto
             introducao = self._introducao
 
         elif not isinstance(introducao, str):
+            # tipo invalido para introducao, retorne um erro
             raise TypeError(("Escolhas.entrada: introducao deve ser do tipo "
                 f"texo ou None, encontrado {type(introducao)}"))
-
-        # valida e converte 'pergunta' se necessario
-        if pergunta is None:
-            pergunta = 'escolha: '
 
         elif not isinstance(identacao, str):
             raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
                 f"positivo, texto ou None, encontrado {type(identacao)}"))
 
+
+        # valida e converte 'pergunta' se necessario
+        if pergunta is None:
+            pergunta = 'escolha: '
+
+
         # mostra a introducao
         print(identacao)
         print(identacao, introducao, sep='')
 
-        # pergunta ao usuario as escolhas
+        # mostra as opcoes
+        for indice, op in enumerate(self._opcoes):
+            op.exibir(indice=indice, identacao='  '+identacao)
+
+        # espacamento entre as opcoes e a pergunta
+        print(identacao)
+
+        # manda o usuario escolher uma opcao,
+        # permanecendo no loop ate que um valor valido seja fornecido.
         indice_escolha = 0
         while True:
 
-            # mostra as opcoes
-            for indice, op in enumerate(self._opcoes):
-                op.exibir(indice=indice, identacao='  '+identacao)
-
             # entrada da escolha
             try:
-                print(identacao)
                 valor = input(identacao + pergunta)
                 indice_escolha = int(valor)
             except ValueError:
                 pass
             else:
-                # escolha valida
+                # verifica se a escolha esta dentro dos valores permitidos
                 if indice_escolha >= 0 and indice_escolha < len(self._opcoes):
                     break
 
             # escolha invalida
             print(identacao, 'escolha invalida, tente novamente', sep='')
+            print(identacao)
 
-        # retorna escolha
+        # retorna o numero da escolha e escolha do usuario
         return indice_escolha, self._opcoes[indice_escolha]
 
     def escolher(self, introducao=None, pergunta=None, identacao=None, *, args=tuple(), kwargs={}):
+        """
+        manda o usuario escolher uma das opcoes da classe, executando sua funcao
+        com os argumentos fornecidos. chama o metodo 'escolher_indice' internamente.
 
-        # escolher opcao
+        imprime no terminal uma introducao, cada uma das opcoes com o seu numero
+        de escolha e um texto de pergunta (padrao: 'escolha: '). se um numero
+        invalido for fornecido, um erro sera mostrado e o usuario sera perguntado
+        novamente ate uma resposta valida for entrada.
+
+        se 'introducao' NAO for fornecido, a introducao padrao da classe sera
+        usada em seu lugar, se nenhum delas forem fornecidas um erro sera mostrado.
+
+        'pergunta', se fornecido, deve ser um texto.
+
+        se 'indentacao' for fornecido, deve ser um texto ou um numero de espacos
+        a ser imprimido antes de cada linha, permitido que o texto seja identado.
+        """
+
+        # escolher a opcao atravez da funcao interna
         indice, opcao = self.escolher_indice(introducao, pergunta, identacao)
 
-        # executar opcao
+        # executa a opcao com os argumentos fornecidos
         return opcao(*args, **kwargs)
 
     @property
