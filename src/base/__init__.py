@@ -180,7 +180,9 @@ class Escolhas:
 
     permite:
         utilizacao parcial como lista que so contem items do tipo Opcao,
-        pergutar ao usuario entre as opcoes retornando ou executando a escolhida.
+        pergutar ao usuario entre as opcoes retornando ou executando a escolhida,
+        exibicao de uma introducao e as opcoes atravez do metodo exibir.
+
     """
 
     def __init__(self, *opcoes, introducao=None, copiar_opcoes=False):
@@ -280,10 +282,69 @@ class Escolhas:
         # remove a opcao
         del self._opcoes[indice]
 
+    def exibir(self, introducao=None, identacao=None):
+        """
+        imprime no terminal uma introducao e cada uma das opcoes
+        com o seu numero de escolha para serem lidas pelo usuario.
+
+        se 'introducao' NAO for fornecido, a introducao padrao da classe sera
+        usada em seu lugar, se nenhum delas forem fornecidas um erro sera mostrado.
+
+        se 'indentacao' for fornecido, deve ser um texto ou um numero de espacos
+        a ser imprimido antes de cada linha, permitido que o texto seja identado.
+        """
+
+        # valida e converte 'idetacao' se necessario
+        if identacao is None:
+            identacao = ''
+
+        elif isinstance(identacao, int):
+
+            if identacao < 0:
+                raise ValueError(("Escolhas.exibir: identacao nao pode "
+                    f"ser um numero negativo, encontrado {identacao}"))
+
+            identacao = ' ' * identacao
+
+        elif not isinstance(identacao, str):
+            raise TypeError(("Escolhas.exibir: identacao deve ser um numero "
+                f"positivo, texto ou None, encontrado {type(identacao)}"))
+
+
+        # valida 'introducao' e se necessario usa a introducao do objeto
+        if introducao is None:
+
+            # nenhuma introducao fornecida, retorne um erro
+            if self._introducao is None:
+                raise ValueError(("Escolhas.exibir: nenhuma introducao foi "
+                    "fornecida para a funcao e o objeto nao possui uma introducao padrao"))
+
+            # usando a introducao padrao do objeto
+            introducao = self._introducao
+
+        elif not isinstance(introducao, str):
+            # tipo invalido para introducao, retorne um erro
+            raise TypeError(("Escolhas.exibir: introducao deve ser do tipo "
+                f"texo ou None, encontrado {type(introducao)}"))
+
+        elif not isinstance(identacao, str):
+            raise TypeError(("Escolhas.exibir: identacao deve ser um numero "
+                f"positivo, texto ou None, encontrado {type(identacao)}"))
+
+        # mostra a introducao
+        print(identacao)
+        print(identacao, introducao, sep='')
+
+        # mostra as opcoes
+        for indice, op in enumerate(self._opcoes):
+            op.exibir(indice=indice, identacao='  '+identacao)
+
+
     def escolher_indice(self, introducao=None, pergunta=None, identacao=None):
         """
         manda o usuario escolher uma das opcoes da classe, retornando o numero
-        da escolha e a opcao escolhida.
+        da escolha e a opcao escolhida, chama o metodo exibir internamente para
+        exibir a introducao e as opcoes.
 
         imprime no terminal uma introducao, cada uma das opcoes com o seu numero
         de escolha e um texto de pergunta (padrao: 'escolha: '). se um numero
@@ -299,56 +360,16 @@ class Escolhas:
         a ser imprimido antes de cada linha, permitido que o texto seja identado.
         """
 
-        # valida e converte 'idetacao' se necessario
-        if identacao is None:
-            identacao = ''
-
-        elif isinstance(identacao, int):
-
-            if identacao < 0:
-                raise ValueError(("Escolhas.entrada: identacao nao pode "
-                    f"ser um numero negativo, encontrado {identacao}"))
-
-            identacao = ' ' * identacao
-
-        elif not isinstance(identacao, str):
-            raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
-                f"positivo, texto ou None, encontrado {type(identacao)}"))
-
-
-        # valida 'introducao' e se necessario usa a introducao do objeto
-        if introducao is None:
-
-            # nenhuma introducao fornecida, retorne um erro
-            if self._introducao is None:
-                raise ValueError(("Escolhas.entrada: nenhuma introducao foi "
-                    "fornecida para a funcao e o objeto nao possui uma introducao padrao"))
-
-            # usando a introducao padrao do objeto
-            introducao = self._introducao
-
-        elif not isinstance(introducao, str):
-            # tipo invalido para introducao, retorne um erro
-            raise TypeError(("Escolhas.entrada: introducao deve ser do tipo "
-                f"texo ou None, encontrado {type(introducao)}"))
-
-        elif not isinstance(identacao, str):
-            raise TypeError(("Escolhas.entrada: identacao deve ser um numero "
-                f"positivo, texto ou None, encontrado {type(identacao)}"))
-
-
         # valida e converte 'pergunta' se necessario
         if pergunta is None:
             pergunta = 'escolha: '
 
+        elif not isinstance(pergunta, str):
+            raise TypeError(("Escolhas.entrada_indice: pergunta deve ser do "
+                f"tipo texto None, encontrado {type(identacao)}"))
 
-        # mostra a introducao
-        print(identacao)
-        print(identacao, introducao, sep='')
-
-        # mostra as opcoes
-        for indice, op in enumerate(self._opcoes):
-            op.exibir(indice=indice, identacao='  '+identacao)
+        # exibe a introducao e as opcoes
+        self.exibir(introducao, identacao)
 
         # espacamento entre as opcoes e a pergunta
         print(identacao)
