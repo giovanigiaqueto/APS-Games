@@ -1,4 +1,13 @@
 
+def narrador(*paragrafos, pergunta=None):
+
+    if pergunta is None:
+        pergunta = "aperte enter para continuar: "
+
+    for p in paragrafos:
+        print(p, end='\n\n', flush=True)
+        input()
+
 class GerenciadorEspecial(type):
 
     instancias = {}
