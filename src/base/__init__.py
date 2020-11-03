@@ -207,14 +207,14 @@ class Escolhas:
 
                 else:
                     raise TypeError(("Escolhas.__init__: 'opcoes' deve conter "
-                        f"valores do tipo 'Opcao', {op} encontrado no indice {index}"))
+                        f"valores do tipo 'Opcao', {op} encontrado no indice {indice}"))
 
             elif isinstance(op, Opcao):
                 ops.append(op.copiar() if copiar_opcoes else op)
 
             else:
                 raise TypeError(("Escolhas.__init__: 'opcoes' deve conter valores "
-                    f"do tipo 'Opcao', {op} encontrado no indice {index}"))
+                    f"do tipo 'Opcao', {op} encontrado no indice {indice}"))
 
         if introducao is not None and not isinstance(introducao, str):
             raise TypeError(("Escolhas.__init__: introducao deve ser do tipo "
@@ -339,7 +339,6 @@ class Escolhas:
         for indice, op in enumerate(self._opcoes):
             op.exibir(indice=indice, identacao='  '+identacao)
 
-
     def escolher_indice(self, introducao=None, pergunta=None, identacao=None):
         """
         manda o usuario escolher uma das opcoes da classe, retornando o numero
@@ -366,7 +365,18 @@ class Escolhas:
 
         elif not isinstance(pergunta, str):
             raise TypeError(("Escolhas.entrada_indice: pergunta deve ser do "
-                f"tipo texto None, encontrado {type(identacao)}"))
+                f"tipo texto ou None, encontrado {type(identacao)}"))
+
+        # valida identacao
+        if identacao is None:
+            identacao = ''
+
+        elif isinstance(idetacao, int):
+            identacao = identacao * ' '
+
+        elif not isinstance(identacao, str):
+            raise TypeError(("Escolhas.entrada_indice: identacao deve ser do "
+                f"tipo texto, None ou int, encontrado {type(identacao)}"))
 
         # exibe a introducao e as opcoes
         self.exibir(introducao, identacao)
