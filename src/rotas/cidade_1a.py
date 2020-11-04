@@ -134,11 +134,11 @@ def nao_ajudar_mary():
     """
     Após chamar várias vezes por Mary, você vê que ela não vai acordar a tempo.
     Zumbis surgem ao lado de Mary e encobrem toda a visão que você tinha dela.
-    """
+    """,
     """
     Não tinha como ela sobreviver.
     Não querendo ver essa cena, você puxa Edy e decide seguir em frente.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     return descansar_ou_seguir
 
@@ -149,7 +149,7 @@ def descansar_ou_seguir():
     Após andar alguns metros, você percebe que irá demorar bastante
     para chegar no refúgio se continuarem assim, porém, Edy não quer parar,
     pois quer chegar no refúgio o quanto antes.
-    """)
+    """, identacao=2)
 
     op1 = Opcao("Continuar em direção ao refúgio", lambda: continuar)
     op2 = Opcao("Descansar na casa abandonada", lambda: descansar_abrigo)
@@ -194,8 +194,9 @@ def descansar_abrigo():
     narrador(\
     """
     Vocês decidem descansar em uma casa próxima abandonada.
-    Vendo como a mordida no tornozelo de Edy está, você lembra que se não cuidar,
-    ele não iria resistir e até viraria um deles.
+
+    Vendo como a mordida no tornozelo de Edy está,
+    você lembra que se não cuidar, ele não irá resistir e até virar um deles.
     Pra sua sorte, havia um arco de serra no quintal da casa.
     """, identacao=2)
 
@@ -251,6 +252,7 @@ def bandagens():
     """
     Você deixa Edy no sofá desmaiado perdendo sangue pela perna,
     e corre para investigar a casa, na expectativa de encontrar bandagens.
+
     Mas como era uma casa abandonada, não haviam nenhum tipo de kit médico,
     pois provavelmente antigos moradores ou desertores pegaram antes de nós.
     """,
