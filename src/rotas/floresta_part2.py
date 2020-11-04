@@ -34,7 +34,7 @@ def arrombar():
         'Após encher o tanque, você consegue fazer o barco funcionar.'
         'Manuseando com cuidado o barco, você chega ao outro lado do lago.'
      )
-# *****************************************
+# **************AQUI PARA CONTINUAR APÓS O LAGO***************************
 def voltar():
     narrador(\
         'Não querendo arriscar sua vida com o barco, decides dar a volta no lago.'
@@ -63,7 +63,7 @@ def correr():
         'Após uma longa corrida, você deixa os zumbis para trás e chega ao outro lado do lago.'
      )
 
-# ****************************************************
+# ******************AQUI PARA CONTINUAR APÓS O LAGO**********************************
 def furtivo():
     narrador(\
         'Com medo de ser notado pelos zumbis, você decide ser furtivo.'
@@ -73,7 +73,7 @@ def furtivo():
 'até que chegaste ao outro lado do lago.'
      )
 
-# *****************************************************
+# *****************AQUI PARA CONTINUAR APÓS O LAGO************************************
 
 def direita():
     narrador(\
@@ -143,7 +143,7 @@ def arvore():
         'Com receio do lobo ainda estar por perto, você decide esperar alguns minutos pra depois descer da árvore.'
         'Após uma pequena caminhada, você chega ao outro lado do lago.'
     )
-    # ********************************************************
+    # ***************AQUI PARA CONTINUAR APÓS O LAGO****************************************
 
 def contra_atacar():
     narrador(\
@@ -153,4 +153,4 @@ def contra_atacar():
         'O lobo machucado, não quis tentar a sorte com você e decidiu fugir.'
         'Após o embate com o lobo, você continua o caminho até chegar ao outro lado do lago.'
     )
-    # ***********************************************************
+    # ******************AQUI PARA CONTINUAR APÓS O LAGO*****************************************
