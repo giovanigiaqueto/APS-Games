@@ -128,7 +128,7 @@ def atirar_zumbi_predio():
         Zumbis começam a se dirigir a sua direção por causa do barulho, e você escapa de lá, ajudando Edy a andar.
         """,
 
-        identacao=2)
+        identacao=2, continuar_final=True)
 
     return especial.cidade_1b_saida
 
@@ -139,6 +139,6 @@ def salvar_municao_predio():
         Edy vai precisar de um apoio para conseguir andar.
         """,
 
-        identacao=2)
+        identacao=2, continuar_final=True)
 
     return especial.cidade_1b_saida
