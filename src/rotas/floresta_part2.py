@@ -5,35 +5,49 @@ from base import Opcao, Escolhas
 
 def usar_barco():
     narrador(\
-        'Ao entrar no barco, você tenta dar partida, mas o barco não quer funcionar.'
-        'Parece estar sem gasolina, talvez tenha um pouco guardado no depósito?'
-        'O que quer fazer?'
-    identacao=2)
+        """
+        Ao entrar no barco, você tenta dar partida, mas o barco não quer funcionar.
+        Parece estar sem gasolina, talvez tenha um pouco guardado no depósito?
+        """,
+
+        identacao=2)
 
     op1 = Opcao("Procurar por gasolina no depósito", lambda: procurar)
     op2 = Opcao("Desistir e dar a volta no lago", lambda: voltar)
-    return Escolhas(op1, op2, introducao="O que você vai fazer?:")
+    return Escolhas(op1, op2, introducao="O que quer fazer?")
 
 def procurar():
     narrador(\
-        'Determinado a fazer o barco funcionar, você decide ir ao depósito encontrar gasolina.'
-        'Chegando na porta, você não consegue abri-la.'
-        'Forço a entrada?'
-    identacao=2)
+        """
+        Determinado a fazer o barco funcionar, você decide ir ao depósito encontrar gasolina.
+        Chegando na porta, você não consegue abri-la.
+        """,
+
+        identacao=2)
 
     op1 = Opcao("Arrombar a porta", lambda: arrombar)
     op2 = Opcao("Disistir e dar a volta no lago", lambda: voltar)
-    return Escolhas(op1, op2, introducao="Oque você vai fazer?:")
+    return Escolhas(op1, op2, introducao="Forço a entrada?")
 
 def arrombar():
     narrador(\
-        'Você não pensa em dar a volta e decide arrombar a porta.'
-        'Entrando no depósito você encontra várias coisas de barcos.'
-        'Para sua sorte, há uma boa quantidade de gasolina pronta para ser utilizada.'
-        'Você enche um recipiente que encontrou no depósito e leva para o barco.'
-        'Após encher o tanque, você consegue fazer o barco funcionar.'
-        'Manuseando com cuidado o barco, você chega ao outro lado do lago.'
-     )
+        """
+        Você não pensa em dar a volta e decide arrombar a porta.
+        Entrando no depósito você encontra várias coisas de barcos.
+        """,
+        """
+        Para sua sorte, há uma boa quantidade de gasolina pronta para ser utilizada.
+        Você enche um recipiente que encontrou no depósito e leva para o barco.
+        """,
+        """
+        Após encher o tanque, você consegue fazer o barco funcionar.
+        Manuseando com cuidado o barco, você chega ao outro lado do lago.
+        """,
+
+        identacao=2)
+
+     return # TODO: adicionar nome da funcao do lago aqui
+
 # **************AQUI PARA CONTINUAR APÓS O LAGO***************************
 def voltar():
     narrador(\
