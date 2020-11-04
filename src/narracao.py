@@ -93,7 +93,10 @@ def detectar_identacao(paragrafo):
         if linha and not linha.isspace()]
 
     # menor identacao
-    if len(identacoes) == 1:
+    if len(identacoes) == 0:
+        return 0
+    
+    elif len(identacoes) == 1:
         return identacoes[0]
 
     return min(*identacoes)
