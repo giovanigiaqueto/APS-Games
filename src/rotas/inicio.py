@@ -78,8 +78,8 @@ def rota_cidade():
     """,
     identacao=2)
 
-    op1 = Opcao("Ir pelo esgoto", lambda: especial.cidade_esgoto)
-    op2 = Opcao("Ir pelos prédios", lambda: especial.cidade_predios)
+    op1 = Opcao("Ir pelo esgoto", lambda: especial.cidade_1a_inicio)
+    op2 = Opcao("Ir pelos prédios", lambda: especial.cidade_1b_inicio)
 
     return Escolhas(op1, op2, introducao="Você quer continuar por onde?")
 
