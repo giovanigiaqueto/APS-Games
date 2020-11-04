@@ -1,0 +1,92 @@
+diff --git a/src/rotas/floresta_part2.py b/src/rotas/floresta_part2.py
+index eeeac2b..bf568a5 100644
+--- a/src/rotas/floresta_part2.py
++++ b/src/rotas/floresta_part2.py
+@@ -100,7 +100,7 @@ def furtivo():
+         """,
+         """
+         Os zumbis parecem ter escutado algo, porém não dão atenção.
+-        Após se distanciar um pouco dos zumbis, você continua o caminho numa velocidade maior, 
++        Após se distanciar um pouco dos zumbis, você continua o caminho numa velocidade maior,
+         até que chegaste ao outro lado do lago.
+         """,
+         identencao=2)
+@@ -149,10 +149,7 @@ def direita():
+         Mais uma vez, o lobo facilmente desvia de seu ataque.
+         Sendo muito mais rápido que você, o lobo te ataca e não tem nada que você possa fazer.
+         """,
+-        """
+-        *Você morreu*
+-        """,
+-        identacao=2)
++        identacao=2, continuar_final=True)
+ 
+         op = Opcao("Menu Inicial", lambda: especial.menu)
+         return Escolhas(op, introducao="Você morreu.")
+@@ -177,10 +174,7 @@ def direita():
+         Não foi umas das opções mais espertas, até porque você sabe que o lobo é mais rápido que você.
+         Mesmo correndo tanto, você se cansa e o lobo te alcança, pulando em você e acabando com sua vida.
+         """,
+-        """
+-        *Você morreu*
+-            """,
+-        identacao=2)
++        identacao=2, continuar_final=True)
+ 
+         op = Opcao("Menu Inicial", lambda: especial.menu)
+ 
+@@ -253,10 +247,7 @@ def direita():
+         Você está no meio da horda de zumbis sem nenhum tipo de arma.
+         Sem nenhuma rota de fuga, você é cercado pelos zumbis, e devorado pelos mesmos.
+         """,
+-        """
+-        *Você morreu.*
+-        """,
+-        identacao=2)
++        identacao=2, continuar_final=True)
+ 
+         op = Opcao("Menu Inicial", lambda: especial.menu)
+ 
+@@ -266,9 +257,9 @@ def direita():
+         narrador(\
+             """
+             Você se lembra de ter visto essa façanha em um videogame, e decide tentar fazer o mesmo.
+-            Para sua sorte, há um zumbi separado da horda. Você chama a atenção dele e o acerta na 
++            Para sua sorte, há um zumbi separado da horda. Você chama a atenção dele e o acerta na
+             cabeça e várias vezes na barriga, abrindo por dentro.
+-            Com o zumbi no chão, você abre o buraco feito na barriga do zumbi e enche suas mãos de sangue, 
++            Com o zumbi no chão, você abre o buraco feito na barriga do zumbi e enche suas mãos de sangue,
+             e esfrega em todo seu rosto, corpo e roupas, até que esteja fedendo por completo, igual um zumbi.
+             Pronto para um dos maiores desafios da sua vida, você segue em direção a horda.
+             Você anda o mais devagar possível, para não tentar chamar atenção dos zumbis.
+@@ -280,19 +271,19 @@ def direita():
+             """
+             O zumbi não encontrou nada de humano em você e decide sair do caminho.
+             Com o coração na boca, você continua andando em direção ao refúgio.
+-            Finalmente você passa pela horda e se encontra na frente do portão do refúgio, onde guardas 
++            Finalmente você passa pela horda e se encontra na frente do portão do refúgio, onde guardas
+             estão monitorando pela torre.
+             Você acena para os guardas que correm para abrir o portão para ti.
+             """,
+             """Epílogo
+             """,
+-            """ 
+-            Dentro do refúgio, você pergunta para os guardas se duas pessoas chamadas Edy e Mary vieram para cá, 
++            """
++            Dentro do refúgio, você pergunta para os guardas se duas pessoas chamadas Edy e Mary vieram para cá,
+             porém eles não tinham informação nenhuma, e recomendaram que você fosse checar no dormitório.
+             Chegando lá, você encontra seus amigos Edy e Mary, que chorava de felicidade por ver você vivo.
+-            Dizem eles que quando acordaram, estavam na beira da estrada todo machucados, por isso não estavam 
+-            no carro comigo. Soldados do exército passaram por lá e trouxeram eles para o refúgio. 
+-            “Tentamos de tudo para fazê-los voltarem lá e procurar por você, eles até foram, porém só encontraram 
++            Dizem eles que quando acordaram, estavam na beira da estrada todo machucados, por isso não estavam
++            no carro comigo. Soldados do exército passaram por lá e trouxeram eles para o refúgio.
++            “Tentamos de tudo para fazê-los voltarem lá e procurar por você, eles até foram, porém só encontraram
+             um carro com ninguém dentro. Ficamos muitos preocupados que algo poderia ter acontecido com você.”
+             Agora, uma nova vida se inicia. Como sobreviver a esse inesperado apocalipse? Só o futuro dirá.
+             =============
+@@ -301,4 +292,3 @@ def direita():
+         identacao=2)
+ 
+         op = Opcao("Voltar ao Menu Princial", lambda : especial.menu)
+-
