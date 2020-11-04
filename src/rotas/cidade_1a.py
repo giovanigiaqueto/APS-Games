@@ -38,7 +38,7 @@ def esgoto_esquerda():
     """
     Ao dar meia volta, zumbis surgem do buraco que havia no esgoto,
     bloqueando a sua única saída.
-    
+
     Você tenta matar os zumbis que haviam no caminho,
     porém você não imaginava que iriam aparecer tantos assim.
     """,
@@ -46,7 +46,7 @@ def esgoto_esquerda():
     *click* *click*
     Sua munição acabou. Não tendo mais como se defender,
     você e seus amigos são encurralados, e suas vidas são tomadas.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     op = Opcao("Menu Inicial", lambda: especial.menu)
 
@@ -62,9 +62,6 @@ def esgoto_direita():
     """
     Até que você escuta Edy gritar de dor. Ao olhar pra trás você vê Edy sendo mordido
     no tornozelo por um zumbi que o pegou de surpresa, saindo de um buraco.
-    """,
-    """
-
     """, identacao=2)
 
     op1 = Opcao("Atirar no zumbi", lambda: atirar_zumbi)
@@ -186,7 +183,7 @@ def continuar():
     """
     Talvez você tenha esquecido, mas Edy ao ser mordido por um zumbi,
     não ia demorar muito tempo para virar zumbi.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     op = Opcao("Menu Inicial", lambda: especial.menu)
 
