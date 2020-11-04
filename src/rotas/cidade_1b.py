@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ..especial
+from .. import especial
 from ..narracao import narrador
 from ..base import Opcao, Escolhas
 
-def rota_cidade_1b():
+def inicio():
 
     narrador( \
         """

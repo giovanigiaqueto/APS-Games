@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ..especial
+from .. import especial
 from ..narracao import narrador
 from ..base import Opcao, Escolhas
 
-def cidade_esgoto():
+def inicio():
 
     narrador(\
     """
@@ -15,12 +15,13 @@ def cidade_esgoto():
     """
     Já dentro do esgoto, alguns metros distantes de onde desceram,
     vocês encontram uma bifurcação.
+
     Mary comenta “Vamos pela esquerda, esquerda sempre é o caminho certo!”
     Já Edy, contesta “Isso é apenas uma possibilidade! Vamos continuar pela direita.”
     """, identacao=2)
 
-    op = Opcao("Esquerda!", lambda: esgoto_esquerda)
-    op = Opcao("Direita!",  lambda: esgoto_direita)
+    op1 = Opcao("Esquerda!", lambda: esgoto_esquerda)
+    op2 = Opcao("Direita!",  lambda: esgoto_direita)
 
     return Escolhas(op1, op2, introducao="Mais uma vez, a decisão é sua")
 
@@ -37,6 +38,7 @@ def esgoto_esquerda():
     """
     Ao dar meia volta, zumbis surgem do buraco que havia no esgoto,
     bloqueando a sua única saída.
+    
     Você tenta matar os zumbis que haviam no caminho,
     porém você não imaginava que iriam aparecer tantos assim.
     """,
@@ -108,8 +110,8 @@ def fim_esgoto():
     ao ser pisada e Mary cai de costas no chão do esgoto.
     """, identacao=2)
 
-    op1 = Opcao("Descer e salvar Mary", lambda: )
-    op2 = Opcao("Abandonar Mary", lambda: )
+    op1 = Opcao("Descer e salvar Mary", lambda: ajudar_mary)
+    op2 = Opcao("Abandonar Mary", lambda: nao_ajudar_mary)
 
     return Escolhas(op1, op2, introducao="Você ao ver Mary desacordada no chão do esgoto, decide:")
 
@@ -248,6 +250,7 @@ def camisa():
 
 def bandagens():
 
+    narrador(\
     """
     Você deixa Edy no sofá desmaiado perdendo sangue pela perna,
     e corre para investigar a casa, na expectativa de encontrar bandagens.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import especial
-from base import Opcao, Escolhas
+from . import especial
+from .base import Opcao, Escolhas
 
 def menu():
 

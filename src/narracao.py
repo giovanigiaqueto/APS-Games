@@ -76,4 +76,5 @@ def remover_identacao(*paragrafos):
 def detectar_identacao(paragrafo):
 
     identacao = lambda linha: len(linha) - len(linha.lstrip())
-    return min(*[identacao(linha) for linha in paragrafo.split('\n')])
+    return min(*[identacao(linha) for linha in paragrafo.split('\n') \
+        if linha and not linha.isspace()])

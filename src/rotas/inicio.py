@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ..especial
+from .. import especial
 from ..narracao import narrador
 from ..base import Opcao, Escolhas
 
@@ -10,7 +10,7 @@ def inicio():
     narrador(\
     """
     Prólogo – Uma noite inesperada
-
+    
     Eram duas da manhã, noite de lua cheia.
     Eu, Mary e Edy fomos a uma festa de um conhecido nosso, que morava na cidade vizinha.
     Como já estava ficando tarde, decidimos ir embora para casa.

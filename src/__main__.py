@@ -1,8 +1,10 @@
 
-from base import Opcao, Escolhas
-import especial
+from .base import Opcao, Escolhas
+from . import especial
 
-from menu import *
+from .menu import *
+
+from .rotas import inicio, cidade_1a, cidade_1b
 
 gerenciador = menu
 proximo = None
@@ -21,7 +23,13 @@ while True:
             proximo = menu
 
         elif gerenciador is especial.inicio:
-            proximo = inicio
+            proximo = inicio.inicio
+
+        elif gerenciador is especial.cidade_1a_inicio:
+            proximo = cidade_1a.inicio
+
+        elif gerenciador is especial.cidade_1b_inicio:
+            proximo = cidade_1b.inicio
 
         else:
             print( "erro: falha ao gerenciar GerenciadorEspecial,",
