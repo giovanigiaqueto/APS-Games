@@ -42,7 +42,7 @@ def narrador(*paragrafos, identacao=None, pergunta=None, continuar_final=False):
                 input("aperte enter para continuar ")
 
             else:
-                input(pergunta)
+                input(__pergunta)
 
 def corrigir_paragrafos(*paragrafos):
 
@@ -89,7 +89,8 @@ def detectar_identacao(paragrafo):
 
     # calcula identacao
     ler_identacao = lambda linha: len(linha) - len(linha.lstrip())
-    identacoes = [ler_identacao(linha) for linha in paragrafo.split('\n')]
+    identacoes = [ler_identacao(linha) for linha in paragrafo.split('\n') \
+        if linha and not linha.isspace()]
 
     # menor identacao
     if len(identacoes) == 1:
