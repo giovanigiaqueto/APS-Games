@@ -50,7 +50,7 @@ def arrombar():
 
     op1 = Opcao("Descer do outro lado do lago", lambda: lago)
     op2 = Opcao("Voltar? Tem certeza?", lambda : acampamento)
-    return Escolhas(op1, introducao="Oque você vai fazer?:")
+    return Escolhas(op1, op2, introducao="Oque você vai fazer?:")
 
 #*******************************************************************
 
