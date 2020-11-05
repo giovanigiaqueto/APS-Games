@@ -139,6 +139,6 @@ def atirar_em_si():
     que terás que carregar consigo pro resto da sua vida.
     """, identacao=2, continuar_final=True)
 
-    op = Opcao("Voltar ao Menu", especial.menu)
+    op = Opcao("Voltar ao Menu", lambda: especial.menu)
 
     return Escolhas(op, introducao="Você completou o jogo. Obrigado por jogar SURVIVE IF YOU CAN!")
