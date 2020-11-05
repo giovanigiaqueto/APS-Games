@@ -4,7 +4,7 @@ from . import especial
 
 from .menu import *
 
-from .rotas import inicio, cidade_1a, cidade_1b
+from .rotas import inicio, cidade_1a, cidade_1b, cidade_2a, cidade_2b
 
 gerenciador = menu
 proximo = None
@@ -31,6 +31,12 @@ while True:
         elif gerenciador is especial.cidade_1b_inicio:
             proximo = cidade_1b.inicio
 
+        elif gerenciador is especial.cidade_2a_inicio:
+            proximo = cidade_2a.inicio
+
+        elif gerenciador is especial.cidade_2b_inicio:
+            proximo = cidade_2b.inicio
+
         else:
             print( "erro: falha ao gerenciar GerenciadorEspecial,",
                   f"      acao desconhecida '{gereciador}',",
@@ -51,6 +57,10 @@ while True:
     if proximo is None:
         print("erro: valor invalido None recebido depois de gerenciar",
             gerenciador, ", retornando ao menu")
+
+        #use para diagnosticos (debug)
+        #if isinstance(gerenciador, Escolhas):
+        #    print(*gerenciador, sep='\n')
 
     elif not (isinstance(proximo, (Opcao, Escolhas)) or callable(proximo) or
         especial.validar_gerenciador_especial(proximo)):

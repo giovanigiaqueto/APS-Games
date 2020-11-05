@@ -246,6 +246,8 @@ def camisa():
     Agora ele só precisa descansar um tempo
     """, identacao=2, continuar_final=True)
 
+    return descansar
+
 def bandagens():
 
     narrador(\
@@ -295,7 +297,7 @@ def descansar():
     As únicas coisas que você consegue alcançar são sua mochila e um pedaço de pau.
     """, identacao=2)
 
-    op1 = Opcao("Se defender com a mochila", especial.cidade_2a_inicio)
-    op2 = Opcao("Se defender com o pedaço de pau", especial.cidade_2b_inicio)
+    op1 = Opcao("Se defender com a mochila", lambda: especial.cidade_2a_inicio)
+    op2 = Opcao("Se defender com o pedaço de pau", lambda: especial.cidade_2b_inicio)
 
     return Escolhas(op1, op2, introducao="Você decide:")

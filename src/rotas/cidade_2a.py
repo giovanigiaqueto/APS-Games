@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import ..especial
+from .. import especial
 from ..base import Opcao, Escolhas
 from ..narracao import narrador
 
-def usar_mochila():
+def inicio():
 
     narrador(\
     """
@@ -34,9 +34,9 @@ def livrar_edy():
     Seus olhos ficam cheio de lágrimas.
     Os acontecimentos dessa noite é algo que nunca imaginava acontecer.
     Você pega sua mochila e decide seguir para o refúgio.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
-    return refugio()
+    return refugio
 
 def fugir():
 
@@ -48,9 +48,9 @@ def fugir():
     """
     “Sinto muito Edy.”, foram suas últimas palavras para seu amigo.
     Deixando sua mochila de lado, você segue em direção ao refúgio.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
-    return refugio()
+    return refugio
 
 def refugio():
 
@@ -67,12 +67,16 @@ def refugio():
     Na sua frente estavam, seus amigos. Edy, com uma bala na cabeça e Mary,
     toda ensanguentada. Ambos, falando ao mesmo tempo:
     “por que você não me salvou?”
+    """,
+    """
     “por que eu tive que morrer?”
+    """,
+    """
     “você matou a gente.”
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
-    op1 = Opcao("Atirar nos dois", lambda: )
-    op2 = Opcao("Atirar em mim", lambda: )
+    op1 = Opcao("Atirar nos dois", lambda: atirar_guardas)
+    op2 = Opcao("Atirar em mim", lambda: atirar_em_si)
 
     return Escolhas(op1, op2, introducao="“VOCÊ MATOU A GENTE.”")
 
@@ -102,7 +106,7 @@ def atirar_guardas():
 
     op = Opcao("Menu Inicial", lambda: especial.menu)
 
-    Escolhas(op, introducao="Você morreu.")
+    return Escolhas(op, introducao="Você morreu.")
 
 def atirar_em_si():
 
