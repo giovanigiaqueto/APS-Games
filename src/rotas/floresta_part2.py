@@ -3,6 +3,33 @@ from narracao import narrador
 from base import Opcao, Escolhas
 
 
+    def barracas():
+        narrador(\
+        """
+        Chegando nas barracas, você percebe que o lugar está uma bagunça.
+        Roupas para todo lado, comidas desperdiçadas no chão, não parece ter nada de útil.
+        Você escuta uns ruídos vindo de um rádio amador, e decide ouvir de perto.
+        O sinal do rádio melhora e você consegue ouvir o noticiário informando:
+        "Cuidado com as ruas, está acontecendo algo que nunca vimos antes, um apocalipse zumbi!! 
+        Pra todos que estiverem ouvindo essa notícia, se dirijam urgente ao centro da cidade, lá 
+        você encontrará o refúgio! Por favor, estejam seguros!"
+        Apocalipse zumbi... É sério isso?? Agora tenho mais um motivo para me apressar.
+        """,
+        """
+        Você encontra uma bola e um taco de beisebol. Parece que as pessoas que acampavam aqui estavam jogando.
+        Você decide pegar o taco de beisebol, pois pode ser útil.
+        +taco de beisebol adquirido!
+        """,
+        """
+        Agora com o taco de beisebol em mãos, você pode entrar no refeitório ou deixar o acampamento.
+        """,
+
+        identacao=2)
+
+        op1 = Opcao("Entrar no refeitório", lambda: entrar_refeitorio)
+        op2 = Opcao("Ir embora", lambda: entrar_refeitorio)
+        return Escolhas(op1, op2, introducao="O que você vai fazer?:")
+
 def usar_barco():
     narrador(\
         """
