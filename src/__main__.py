@@ -37,6 +37,9 @@ while True:
         elif gerenciador is especial.cidade_2b_inicio:
             proximo = cidade_2b.inicio
 
+        elif gerenciador is especial.cidade_1b_saida:
+            proximo = cidade_1a.descansar_ou_seguir
+
         else:
             print( "erro: falha ao gerenciar GerenciadorEspecial,",
                   f"      acao desconhecida '{gereciador}',",

@@ -69,14 +69,12 @@ def salvar_morte():
         Ao olhar para trás, você vê sua amiga chorando pela sua vida, que acabava naquele momento, sendo devorada na sua frente.
         Sua sanidade havia acabado ali. Você gasta toda sua munição nos zumbis em cima de Mary.
         Não havia mais nada que você poderia fazer. Os zumbis juntam em cima de você e acabam com sua vida.
-        Você morreu.
         """,
 
-
-        identacao=2)
+        identacao=2, continuar_final=True)
 
     op1 = Opcao("Menu Principal", lambda: especial.menu)
-    return Escolhas(op1)
+    return Escolhas(op1, introducao="Você morreu.")
 
 def continuar_mary():
     narrador(\
@@ -98,7 +96,6 @@ def continuar_mary():
     op1 = Opcao("Atirar no zumbi", lambda: atirar_zumbi_predio)
     op2 = Opcao("Salvar munição", lambda: salvar_municao_predio)
     return Escolhas(op1, op2, introducao="Você decide:")
-
 
 def continuar_mary2():
 

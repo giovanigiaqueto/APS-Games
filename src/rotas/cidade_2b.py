@@ -65,7 +65,7 @@ def deixar_amostra():
     Inconformado, você menciona que sua família está lá dentro.
     Os guardas não se importam com isso. Eles obrigam você ir embora, se não iriam atirar.
     Não resta outra opção.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     return epilogo_mordida_amostra
 
@@ -84,7 +84,7 @@ def epilogo_mordida_amostra():
 
     """
     Você completou o jogo. Obrigado por jogar SURVIVE IF YOU CAN!
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     return especial.menu
 
@@ -142,7 +142,7 @@ def atirar_duo():
     Um disparo mais alto e barulhento pôde se ouvir vindo da torre.
     Armado com um rifle de precisão, o soldado posicionado na torre efetua o disparo em ti, apagando sua existência na hora.
     Você morreu.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     return especial.menu
 
@@ -191,9 +191,9 @@ def nao_contar():
     """
     Após a morte deles, algumas pessoas acordaram e viram a cena, e começaram a gritar pedindo por ajuda.
     Não demorou muito para os guardas aparecerem, e com isso, acabarem com minha vida de morto-vivo.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
-    return epilogo_mordida_amostra
+    return epilogo_nao_contar
 
 def epilogo_nao_contar():
     narrador(\
@@ -223,7 +223,7 @@ def contar():
     """
     Os guardas entram no consultório e sem perguntar questões, pegam você pelo braço e o arrastam para fora do refúgio.
     Seus pais gritavam para que não fizessem isso com você, mas, há regras no refúgio, para a segurança de toda a população.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     return epilogo_mordida_amostra
 
@@ -244,6 +244,6 @@ def epilogo_contar():
 
     """
     Você completou o jogo. Obrigado por jogar SURVIVE IF YOU CAN!
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     return especial.menu
