@@ -18,9 +18,20 @@ def inicio():
     """,
     identacao =2)
 
-    op1 = Opcao("Comer as frutinhas", lambda: especial.menu)
+    op1 = Opcao("Comer as frutinhas", lambda: frutinhas)
     op2 = Opcao("Ignorar e continuar andando", lambda: acampamento)
     return Escolhas(op1, op2, introducao="você:")
+
+def frutinhas():
+
+    narrador(\
+    """
+    Você decide comer várias frutinhas para matar a fome,
+    porém não esperava que a única coisa que a frutinha mataria seria você.
+    """, identacao=2)
+
+    op = Opcao("Menu Inicial", lambda: especial.menu)
+    return Escolhas(op, introducao="Você morreu.")
 
 def acampamento():
 
@@ -54,9 +65,25 @@ def refeitorio():
 
         identacao=2)
 
-    op1 = Opcao("Atacar o zumbi", lambda: especial.menu)
+    op1 = Opcao("Atacar o zumbi", lambda: atacar_zumbi)
     op2 = Opcao("Recuar e investigar as barracas", lambda: recuar)
     return Escolhas(op1, op2, introducao="O que você vai fazer?:")
+
+def atacar_zumbi():
+
+    narrador(\
+    """
+    Desarmado, você tenta ataca-lo. Ao bater no zumbi,
+    você acaba fazendo com que ele não esteja mais preso na porta.
+    """,
+    """
+    Você não tem força suficiente para matar um zumbi com seus punhos.
+    O zumbi consegue te derrubar e acaba com sua vida, te devorando por completo.
+    """, identacao=2)
+
+    op = Opcao("Menu Inicial", especial.menu)
+
+    return Escolhas(op, introducao="Você morreu.")
 
 def recuar():
     narrador(\
