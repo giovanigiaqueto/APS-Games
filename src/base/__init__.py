@@ -335,9 +335,9 @@ class Escolhas:
         print(identacao)
         print(identacao, introducao, sep='')
 
-        # mostra as opcoes
+        # mostra as opcoes (primeiro indice=1)
         for indice, op in enumerate(self._opcoes):
-            op.exibir(indice=indice, identacao='  '+identacao)
+            op.exibir(indice=indice+1, identacao='  '+identacao)
 
     def escolher_indice(self, introducao=None, pergunta=None, identacao=None):
         """

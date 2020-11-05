@@ -1,9 +1,11 @@
 
-def narrador(*paragrafos, identacao=None, pergunta=None):
+def narrador(*paragrafos, identacao=None, pergunta=None, continuar_final=False):
 
     # validar a pergunta
-    if pergunta is None:
-        pergunta = "aperte enter para continuar\n"
+
+    __pergunta = pergunta
+    if __pergunta is None:
+        __pergunta = "continuar "
 
     # validar a identacao
     if identacao is None:
@@ -23,14 +25,24 @@ def narrador(*paragrafos, identacao=None, pergunta=None):
 
     # narrar paragrafos
     print()
-    for paragrafo in corrigir_paragrafos(*paragrafos):
+    for indice, paragrafo in enumerate(corrigir_paragrafos(*paragrafos)):
 
         # adiciona a identacao
         paragrafo = '\n'.join([identacao + linha for linha in paragrafo.split('\n')])
 
-        # mostra o paragrafo e espera o usuario digitar enter
+        # mostra o paragrafo
         print('\n', paragrafo, end='\n\n', sep='')
-        input(pergunta)
+
+        # espera o usuario digitar enter
+        if continuar_final or indice < (len(paragrafos) - 1):
+
+            # dica de enter somente no comeco do jogo
+            if pergunta is None and not hasattr(narrador, 'primeiro_continue'):
+                narrador.primeiro_continue = False
+                input("aperte enter para continuar ")
+
+            else:
+                input(__pergunta)
 
 def corrigir_paragrafos(*paragrafos):
 
@@ -75,5 +87,16 @@ def remover_identacao(*paragrafos):
 
 def detectar_identacao(paragrafo):
 
-    identacao = lambda linha: len(linha) - len(linha.lstrip())
-    return min(*[identacao(linha) for linha in paragrafo.split('\n')])
+    # calcula identacao
+    ler_identacao = lambda linha: len(linha) - len(linha.lstrip())
+    identacoes = [ler_identacao(linha) for linha in paragrafo.split('\n') \
+        if linha and not linha.isspace()]
+
+    # menor identacao
+    if len(identacoes) == 0:
+        return 0
+    
+    elif len(identacoes) == 1:
+        return identacoes[0]
+
+    return min(*identacoes)

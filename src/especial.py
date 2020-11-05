@@ -36,3 +36,18 @@ class GerenciadorSair(metaclass=GerenciadorEspecial):
 
 class GerenciadorInicio(metaclass=GerenciadorEspecial):
     pass
+
+class GerenciadorCidade_1A_Inicio(metaclass=GerenciadorEspecial):
+    pass
+
+class GerenciadorCidade_1B_Inicio(metaclass=GerenciadorEspecial):
+    pass
+
+class GerenciadorCidade_2A_Inicio(metaclass=GerenciadorEspecial):
+    pass
+
+class GerenciadorCidade_2B_Inicio(metaclass=GerenciadorEspecial):
+    pass
+
+class GerenciadorCidade_1B_Saida(metaclass=GerenciadorEspecial):
+    pass
