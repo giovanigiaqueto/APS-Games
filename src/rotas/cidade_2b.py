@@ -89,7 +89,7 @@ def epilogo_mordida_amostra():
     return especial.menu
 
 ##final rota_cidade_2b 2
-def fim_casa():
+def esconder_mordida():
     narrador(\
     """
     Você acha que seria bom esconder a mordida, então você a cobre toda com sua camisa.
@@ -172,7 +172,6 @@ def atirar_mim():
     op1 = Opcao("Não Contar", lambda: nao_contar)
     op2 = Opcao("Contar", lambda: contar)
     return Escolhas(op1, op2, introducao="Contar?")
-
 
 def nao_contar():
     narrador(\

@@ -137,7 +137,7 @@ def atirar_em_si():
     Você agora tem um longo caminho pela frente, mesmo seguro dentro do refúgio,
     com a companhia de seus pais, a morte de seus amigos será um grande peso
     que terás que carregar consigo pro resto da sua vida.
-    """, identacao=2)
+    """, identacao=2, continuar_final=True)
 
     op = Opcao("Voltar ao Menu", especial.menu)
 
