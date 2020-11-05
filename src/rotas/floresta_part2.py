@@ -141,7 +141,7 @@ def atacar():
     identacao=2)
 
     op1 = Opcao("Atacar novamente", lambda: atacar_novamente)
-    op2 = Opcao("Correr", lambda: correr)
+    op2 = Opcao("Correr", lambda: correr_lobo)
     return Escolhas(op1, op2, introducao="Oque você vai fazer?:")
 
 def atacar_novamente():
@@ -159,7 +159,7 @@ def atacar_novamente():
     op = Opcao("Menu Inicial", lambda: especial.menu)
     return Escolhas(op, introducao="Você morreu.")
 
-def correr():
+def correr_lobo():
     narrador(\
     """
     Não querendo arriscar sua sorte em atacar o lobo, você decide correr.
@@ -179,10 +179,7 @@ def correndo():
     Não foi umas das opções mais espertas, até porque você sabe que o lobo é mais rápido que você.
     Mesmo correndo tanto, você se cansa e o lobo te alcança, pulando em você e acabando com sua vida.
     """,
-    """
-    *Você morreu*
-        """,
-    identacao=2)
+    identacao=2, continuar_final=True)
 
     op = Opcao("Menu Inicial", lambda: especial.menu)
 
@@ -190,7 +187,7 @@ def correndo():
 
 def arvore():
     narrador(\
-        """
+    """
     Você decide subir na árvore mais próxima.
     Logo após você ficar em cima do tronco, o lobo te alcança, e fica lhe encarando por vários minutos.
     """,
@@ -198,7 +195,7 @@ def arvore():
     Cansado de esperar, ele desiste de te caçar e vai embora.
     Com receio do lobo ainda estar por perto, você decide esperar alguns minutos pra depois descer da árvore.
     Após uma pequena caminhada, você chega ao outro lado do lago.
-     """,
+    """,
     identacao=2)
 
     op1 = Opcao("Chegada!", lambda: lago)
