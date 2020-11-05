@@ -4,7 +4,7 @@ from . import especial
 
 from .menu import *
 
-from .rotas import inicio, cidade_1a, cidade_1b, cidade_2a, cidade_2b
+from .rotas import inicio, cidade_1a, cidade_1b, cidade_2a, cidade_2b, floresta
 
 gerenciador = menu
 proximo = None
@@ -39,6 +39,9 @@ while True:
 
         elif gerenciador is especial.cidade_1b_saida:
             proximo = cidade_1a.descansar_ou_seguir
+
+        elif gerenciador is especial.floresta:
+            proximo = floresta.inicio
 
         else:
             print( "erro: falha ao gerenciar GerenciadorEspecial,",

@@ -392,7 +392,7 @@ class Escolhas:
             # entrada da escolha
             try:
                 valor = input(identacao + pergunta)
-                indice_escolha = int(valor)
+                indice_escolha = int(valor) - 1
             except ValueError:
                 pass
             else:

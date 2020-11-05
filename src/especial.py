@@ -51,3 +51,6 @@ class GerenciadorCidade_2B_Inicio(metaclass=GerenciadorEspecial):
 
 class GerenciadorCidade_1B_Saida(metaclass=GerenciadorEspecial):
     pass
+
+class GerenciadorFloresta(metaclass=GerenciadorEspecial):
+    pass

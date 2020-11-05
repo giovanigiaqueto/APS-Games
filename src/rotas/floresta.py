@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ..especial
+from .. import especial
 from ..narracao import narrador
 from ..base import Opcao, Escolhas
 
-def floresta():
+from . import floresta_part2 as part2
+
+def inicio():
 
     narrador(\
     """
@@ -60,7 +62,12 @@ def recuar():
     narrador(\
         """
         Você percebe que é muito perigoso tentar atacar o zumbi com apenas suas mãos e decide recuar. Sua única opção é investigar as barracas.
-        """,
+        """, identacao=2, continuar_final=True)
+
+    return barracas
+
+def barracas():
+    narrador(\
         """
         Chegando nas barracas, você percebe que o lugar está uma bagunça.
         Roupas para todo lado, comidas desperdiçadas no chão, não parece ter nada de útil.
@@ -86,15 +93,20 @@ def recuar():
 
 def entrar_refeitorio():
     narrador(\
-        """
-        Entrando no refeitório, você dá de cara com o zumbi preso na porta da cozinha.
-        Como não havia nada nas mesas do refeitório, a cozinha seria o único lugar a ter algo para comer.
-        Você pega o taco de beisebol e acerta em cheio o zumbi. Derrubando-o no chão
-        Não confiante que ele esteja morto, você acerta mais uma vez a cabeça do zumbi.
-        """,
-        """
-        Você entra na cozinha e encontra alguns petiscos deixados pelas pessoas que acamparam aqui pela última vez. Não parece estarem vencidos, então você mata sua fome.
-        """,
+    """
+    Entrando no refeitório, você dá de cara com o zumbi preso na porta da cozinha.
+    Como não havia nada nas mesas do refeitório, a cozinha seria o único lugar a ter algo para comer.
+    Você pega o taco de beisebol e acerta em cheio o zumbi. Derrubando-o no chão
+    Não confiante que ele esteja morto, você acerta mais uma vez a cabeça do zumbi.
+    """,
+    """
+    Você entra na cozinha e encontra alguns petiscos deixados pelas pessoas que acamparam aqui pela última vez. Não parece estarem vencidos, então você mata sua fome.
+    """, identacao=2, continuar_final=True)
+
+    return ir_embora
+
+def ir_embora():
+    narrador(\
         """
         Satisfeito com o que encontrou no acampamento, você decide ir embora.
         """,
@@ -104,9 +116,8 @@ def entrar_refeitorio():
         Na beira do lago, há um barco movido a motor e um pequeno depósito.
         Você pensa que o barco pode ser uma boa e rápida opção para atravessar o lago, porém, dar a volta também é uma opção.
         """,
-
         identacao=2)
 
-    op1 = Opcao("Usar o barco", lambda: usar_barco)
-    op2 = Opcao("Dar a volta", lambda: dar_volta)
+    op1 = Opcao("Usar o barco", lambda: part2.usar_barco)
+    op2 = Opcao("Dar a volta", lambda: part2.voltar)
     return Escolhas(op1, op2, introducao="O que você vai fazer?:")

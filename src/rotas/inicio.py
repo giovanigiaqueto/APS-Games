@@ -10,7 +10,7 @@ def inicio():
     narrador(\
     """
     Prólogo – Uma noite inesperada
-    
+
     Eram duas da manhã, noite de lua cheia.
     Eu, Mary e Edy fomos a uma festa de um conhecido nosso, que morava na cidade vizinha.
     Como já estava ficando tarde, decidimos ir embora para casa.
@@ -117,9 +117,6 @@ def rota_floresta():
     +conhecimento da área!
 
     Seu celular desligou por falta de bateria.
-    """,
-    """
-    Após olhar o mapa, você segue o caminho mais apropriado para chegar na cidade.
-    Não tão longe do seu ponto de partida, você encontra algumas frutinhas,
-    nos arbustos ao lado da trilha. Sua barriga está roncando.
-    """) # rota do Antônio, vou para aqui
+    """, identacao=2, continuar_final=True)
+
+    return especial.floresta
